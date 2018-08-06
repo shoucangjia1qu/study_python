@@ -9,12 +9,12 @@ import jieba
 import pandas as pd
 import numpy as np
 data = pd.DataFrame(columns=['c1','c2'])
-data=data.append({"c1":"10","c2":"相知无远近 万里尚为邻—2018年7月习近平主席亚非行纪实"},ignore_index=True)
+data=data.append({"c1":"10","c2":"相知无远近 万里尚为邻—2018年7月主席亚非行纪实"},ignore_index=True)
 data=data.append({"c1":"20","c2":"商务部新闻发言人就中方拟对部分自美进口产品采取反制措施发表谈话"},ignore_index=True)
 data=data.append({"c1":"30","c2":"处警民警赶达现场后，立即开展调查处置工作。在处置过程中，3名犯罪嫌疑人抗拒带离并逃窜，处警民警鸣枪示警并果断处置，现场无人员伤亡."},ignore_index=True)
 data=data.append({"c1":"10","c2":"为什么是5%到10%的抽检率？除中检院外，七个省(市)级药品检验机构，为何极少承担疫苗批签发工作？百日咳的研究为何一直没有核心突破？百日咳发病人数为何逐月上涨？"},ignore_index=True)
-data=data.append({"c1":"20","c2":"热血沸腾！看习近平强军关键词 "},ignore_index=True)
-data=data.append({"c1":"30","c2":"汇集更强动力——非洲各界积极评价习近平主席访非成果 "},ignore_index=True)
+data=data.append({"c1":"20","c2":"热血沸腾！看强军关键词 "},ignore_index=True)
+data=data.append({"c1":"30","c2":"汇集更强动力——非洲各界积极评价主席访非成果 "},ignore_index=True)
 cuts=[]
 for i in list(data.c2):
     cuts = jieba.lcut(i)+cuts
