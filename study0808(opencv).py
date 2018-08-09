@@ -9,6 +9,7 @@ import cv2,os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
 os.chdir("D:\\mywork\\test")
 #打开窗口
 cv2.namedWindow('img1')
@@ -25,6 +26,30 @@ cv2.waitKey(0)      #按任意键执行下面程序
 #关闭窗口
 #cv2.destroyWindow('img1')
 cv2.destroyAllWindows()
+
+#%%
+#保存图像
+import cv2,os
+import numpy as np
+import pandas as pd
+
+os.chdir("D:\\mywork\\test")
+cv2.namedWindow('SaveImage')
+image = cv2.imread('images\\test2.jpg')
+cv2.imshow('SaveImage',image)
+#cv2.waitKey(0)
+cv2.imwrite('images\\test2_copy1.jpg',image)    #图片质量默认为95
+cv2.imwrite('images\\test2_copy2.jpg',image,[int(cv2.IMWRITE_JPEG_QUALITY),50])     #图片质量设置为50
+cv2.waitKey(0)      #这个等待时间放哪里都行
+cv2.destroyWindow('SaveImage')
+
+#%%
+#基本绘图
+
+
+
+
+
 
 
 
