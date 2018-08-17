@@ -17,7 +17,7 @@ md5.hexdigest()==md5_2          #True,结果一致
 
 #检查网页是否更新
 import os , requests , hashlib
-os.chdir(r"D:/mywork/test")
+#os.chdir(r"D:/mywork/test")
 url="http://news.sina.com.cn/"
 html=requests.get(url)
 html_text=html.text.encode('utf-8-sig')
