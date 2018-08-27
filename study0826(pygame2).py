@@ -148,7 +148,7 @@ ballbg=pygame.Surface((30,30))
 ballbg.fill((200,200,255))
 pygame.draw.circle(ballbg,(0,0,255),(15,15),15,0)
 rect1 = ballbg.get_rect()
-rect1.center=(50,100)
+rect1.center=(200,100)
 x,y=rect1.topleft
 dx=3
 
@@ -176,10 +176,57 @@ while running:
 pygame.quit()
 
 #%%
-
-
-
-
-
+#制作会自动反弹的小球
+import pygame,random
+import numpy as np
+pygame.init()
+#窗口
+win=pygame.display.set_mode((640,480))
+pygame.display.set_caption("弹球")
+#背景
+bg=pygame.Surface(win.get_size())
+bg=bg.convert()
+bg.fill((255,255,255))
+#球
+ball=pygame.Surface((30,30))
+ball.fill((255,255,255))
+pygame.draw.circle(ball,(50,50,255),(15,15),15,0)
+#创建起始角度
+angle = random.randint(20,70)
+orc = np.math.radians(angle)
+dx = 5*np.math.cos(orc)
+dy = -5*np.math.sin(orc)
+#获取球位置信息
+rect1 = ball.get_rect()
+x,y=(200,100)
+#设置时间组件
+clock=pygame.time.Clock()
+#设置点击事件
+running=True
+while running:
+    clock.tick(30)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    x+=dx
+    y+=dy
+    win.blit(bg,(0,0))
+    rect1.center=(x,y)
+    if rect1.left<0:
+        rect1.left=0
+        dx*=-1
+    elif rect1.right>bg.get_width():
+        rect1.right=bg.get_width()
+        dx*=-1
+    elif rect1.top<0:
+        rect1.top=0
+        dy*=-1
+    elif rect1.bottom>bg.get_height():
+        rect1.bottom=bg.get_height()
+        dy*=-1
+    win.blit(ball,rect1.topleft)
+#    print(rect1.topleft)
+    pygame.display.update()
+pygame.quit()
 
 
