@@ -188,11 +188,11 @@ bg=pygame.Surface(win.get_size())
 bg=bg.convert()
 bg.fill((255,255,255))
 #球
-ball=pygame.Surface((30,30))
+ball=pygame.Surface([30,30])
 ball.fill((255,255,255))
 pygame.draw.circle(ball,(50,50,255),(15,15),15,0)
 #创建起始角度
-angle = random.randint(20,70)
+angle = random.randint(20,90)
 orc = np.math.radians(angle)
 dx = 5*np.math.cos(orc)
 dy = -5*np.math.sin(orc)
@@ -208,9 +208,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    win.blit(bg,(0,0))
     x+=dx
     y+=dy
-    win.blit(bg,(0,0))
     rect1.center=(x,y)
     if rect1.left<0:
         rect1.left=0
@@ -228,5 +228,91 @@ while running:
 #    print(rect1.topleft)
     pygame.display.update()
 pygame.quit()
+
+#%%
+#面向对象
+import pygame,random,math
+
+#创建类
+class Ball(pygame.sprite.Sprite):
+    #设置属性
+    x=0
+    y=0
+    dx=0
+    dy=0
+    #设置动作
+    def __init__(self, speed, sx, sy, radium, color):
+        pygame.sprite.Sprite.__init__(self)
+        self.x = sx
+        self.y = sy
+        self.image = pygame.Surface([radium*2,radium*2])        #设置球背景
+        self.image.fill((255,255,255))      #背景设为白色
+        pygame.draw.circle(self.image,color,(radium,radium),radium,0)   #画实心圆
+        self.rect = self.image.get_rect()       #获取球背景区域
+        self.rect.center=(sx,sy)        #把初始位置作为球的中心
+        angle=random.randint(20,70)     #设置角度
+        orc=math.radians(angle)     #转化为弧度
+        self.dx = speed*math.cos(orc)    #水平移动速度
+        self.dy = -speed*math.sin(orc)   #垂直移动速度
+    
+    def update(self):
+        self.x+=self.dx
+        self.y+=self.dy
+        self.rect.center = (self.x,self.y)
+        if self.rect.left<0:
+            self.rect.left=0
+            self.dx*=-1
+        elif self.rect.right>bg.get_width():
+            self.rect.right=bg.get_width()
+            self.dx*=-1
+        elif self.rect.top<0:
+            self.rect.top=0
+            self.dy*=-1
+        elif self.rect.bottom>bg.get_height():
+            self.rect.bottom=bg.get_height()
+            self.dy*=-1
+        
+        
+pygame.init()
+#窗口
+win=pygame.display.set_mode((640,480))
+pygame.display.set_caption("弹球-对象")
+#背景
+bg=pygame.Surface(win.get_size())
+bg=bg.convert()
+bg.fill((255,255,255))
+#创建角色组
+allsprite = pygame.sprite.Group()
+blueball = Ball(6,20,20,15,(0,0,255))
+allsprite.add(blueball)
+redball = Ball(10,250,250,15,(255,0,0))
+allsprite.add(redball)
+#设置时间组件
+clock=pygame.time.Clock()
+#设置点击事件
+running=True
+while running:
+    clock.tick(30)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    win.blit(bg,(0,0))
+    blueball.update()
+    redball.update()
+    #绘制角色组到画布中
+    allsprite.draw(win)
+    pygame.display.update()
+pygame.quit()
+    
+
+
+
+
+
+
+
+
+
+
 
 
