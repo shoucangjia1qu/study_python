@@ -79,7 +79,76 @@ time.mktime(t)       #输入9个元素的元组，和struct_time一致
 '''1550587605.0'''
 
 #%%
-'''datetime模块'''
+'''2、datetime.date模块'''
+from datetime import date
+#2-1 date类方法和属性
+date.max                #datetime格式的最大时间
+'''datetime.date(9999, 12, 31)'''
+date.min                #datetime格式的最小时间
+'''datetime.date(1, 1, 1)'''
+date.resolution         #datetime格式表示日期的最小单位
+'''datetime.timedelta(1)'''
+date.today()            #显示当天的日期
+'''datetime.date(2019, 2, 20)'''
+date.fromtimestamp(time.time()+24*3600)         #获取时间戳对应的datetime格式日期，输入时间戳
+'''datetime.date(2019, 2, 21)'''
+
+#2-2 datetime对象方法和属性
+c = date(2019,2,19)            #datetime格式时间
+c.year, c.month, c.day         #datetime格式的年，月，日
+'''(2019, 2, 19)'''
+c.replace(2020), c.replace(2020,1), c.replace(2020,1,20)     #datetime格式的替换
+'''(datetime.date(2020, 2, 19),
+ datetime.date(2020, 1, 19),
+ datetime.date(2020, 1, 20))'''
+c.timetuple()                   #datetime格式转换为struct_time格式
+'''time.struct_time(tm_year=2019, tm_mon=2, tm_mday=19, tm_hour=0, 
+                    tm_min=0, tm_sec=0, tm_wday=1, tm_yday=50, tm_isdst=-1)'''
+c.toordinal()                   #从0001-01-01开始起的天数
+'''737109'''
+c.isocalendar()                 #datetime格式的年，周，星期几（isoweekday）
+'''(2019, 8, 2)'''
+c.isoweekday()                  #返回星期几，取值[1,7]，1表示星期一
+'''2'''
+c.weekday()                     #返回星期几，取值[0,6]，0表示星期一
+'''1'''
+c.isoformat()                   #datetime格式转为"YYYY-MM-DD"的格式
+'''2019-02-19'''
+c.ctime()                       #转为time标准字符串格式的日期
+''''Tue Feb 19 00:00:00 2019''''
+c.strftime('%d%b%Y')            #转为指定格式的字符串日期，此处为"%d%b%Y"格式
+'''19Feb2019'''
+
+#%%
+'''3、datetime.time模块'''
+from datetime import time
+#3-1 time类方法和属性
+time.max                        #time类能表示的最大时间
+'''datetime.time(23, 59, 59, 999999)'''
+time.min                        #time类能表示的最小时间
+'''atetime.time(0, 0)'''
+time.resolution                 #time类的最小单位
+'''datetime.timedelta(0, 0, 1)'''
+
+#3-2 time对象方法和属性
+d=time(20,50,30,600)            #生成一个time对象
+print(d)
+'''20:50:30.000600'''
+print(d.hour,d.minute,d.second,d.microsecond)           #time格式的时，分，秒，微妙
+'''20 50 30 600'''
+d.tzinfo                        #不懂
+d.replace(21,51,31,999)         #time替换
+d.isoformat()                   #time格式转为"HH:MM.SS%f"的格式
+'''20:50:30.000600'''
+d.strftime('%H-%M-%S-%f')       #time格式转为指定字符串格式，此处为"%H-%M-%S-%f"
+'''20-50-30-000600'''
+d.strftime('%H:%M:%S.%f')
+'''20:50:30.000600'''
+
+#%%
+'''4、datetime.datetime模块'''
+from datetime import datetime,timezone
+#4-1 datetime类方法和属性
 
 
 
@@ -88,10 +157,7 @@ time.mktime(t)       #输入9个元素的元组，和struct_time一致
 
 
 
-
-
-
-
+#%%
 '''calendar模块'''
 
 
