@@ -149,21 +149,92 @@ d.strftime('%H:%M:%S.%f')
 '''4、datetime.datetime模块'''
 from datetime import datetime,timezone
 #4-1 datetime类方法和属性
+t1 = datetime.today()           #返回当前时间，（年，月，日，时，分，秒，微秒）
+'''datetime.datetime(2019, 2, 20, 22, 18, 52, 846652)'''
+t2 = datetime.now(timezone.utc)             #返回指定时区的时间，不指定参数就返回当前时间
+'''datetime.datetime(2019, 2, 20, 14, 25, 37, 191126, tzinfo=datetime.timezone.utc)'''
+t3 = datetime.utcnow()          #返回UTC时间
+'''datetime.datetime(2019, 2, 20, 14, 23, 24, 743756)'''
+t4 = datetime.fromtimestamp(time.time()+24*3600)         #时间戳转换为datetime格式，需输入时间戳
+'''datetime.datetime(2019, 2, 21, 22, 27, 47, 720952)'''
+t5 = datetime.utcfromtimestamp(time.time()+48*3600)      #时间戳转换为UTC的datetime格式，需输入时间戳
+'''datetime.datetime(2019, 2, 22, 14, 30, 42, 281178)'''
+import datetime
+da = datetime.date(2019,2,19) 
+ti = datetime.time(22,35,20,900)
+datetime.datetime.combine(da,ti)          #将date和time合并起来
+'''datetime.datetime(2019, 2, 19, 22, 35, 20, 900)'''
+from datetime import datetime,timezone
+t6 = datetime.strptime('2018/12/31 12:00:01','%Y/%m/%d %H:%M:%S')       #字符串转换为datetime格式
+'''datetime.datetime(2018, 12, 31, 12, 0, 1)'''
 
-
-
-
-
-
-
+#4-2 datetime对象的方法和属性
+dt = datetime.today()           #生成一个datetime对象
+dt = datetime(2019,2,20,23,9,50,680416)
+'''datetime.datetime(2019, 2, 20, 23, 9, 50, 680416)'''
+print(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second, dt.microsecond)
+'''2019 2 20 23 9 50 680416'''
+dt.tzinfo           #datetime对象的时区信息
+dt.timestamp()          #datetime格式转换为时间戳
+'''1550675390.680416'''
+da = dt.date()          #获取date对象
+ti = dt.time()          #获取time对象，tzinfo为None
+ti2 = dt.timetz()       #获取time对象，tzinfo与datetime对象的tzinfo相同
+'''datetime.time(23, 9, 50, 680416)'''
+dt.timetuple()          #datetime格式转换为struct_time格式
+'''time.struct_time(tm_year=2019, tm_mon=2, tm_mday=20, tm_hour=23, 
+                    tm_min=9, tm_sec=50, tm_wday=2, tm_yday=51, tm_isdst=-1)'''
+dt.utctimetuple()
+dt.isocalendar()            #年，周，星期几
+'''(2019, 8, 3)'''
+dt.isoweekday()             #星期几,[1,7]
+'''3'''
+dt.weekday()                #星期几,[0,6]
+'''2'''
+dt.toordinal()              #0001-01-01距今的天数
+'''737110'''
+dt.ctime()                  #转为time.time对象的标准字符串格式
+''''Wed Feb 20 23:23:58 2019''''
+dt.isoformat()              #转为标准格式的字符串，可自行在date对象和time对象间加入分隔符
+'''2019-02-20T23:23:58.112611'''
+dt.isoformat('/')
+'''2019-02-20/23:23:58.112611'''
+dt.isoformat('-')
+'''2019-02-20-23:23:58.112611'''
+dt.strftime('%d%b%Y')       #datetime对象转为指定字符串格式
+'''20Feb2019'''
 
 #%%
-'''calendar模块'''
+'''5、datetime.timedelta'模块'''
+from datetime import timedelta
+#5-1 timedelta类方法和属性
+timedelta.max               #内部值储存为天、秒、微妙，输入的任何参数都可转换为这几个值
+'''datetime.timedelta(999999999, 86399, 999999)'''
+timedelta.min
+'''datetime.timedelta(-999999999)'''
+timedelta.resolution
+'''datetime.timedelta(0, 0, 1)'''
 
+#5-2 timedelta对象方法和属性
+deltax = timedelta(360)         #建立一个时差timedelta类
+deltax.days
+'''360'''
+deltax = timedelta(hours=3)
+deltax.seconds
+'''10800'''
+deltax = timedelta(days=10,hours=5,minutes=30)
+print(deltax.days, deltax.seconds, deltax.microseconds)
+'''10 19800 0'''
+deltax.total_seconds()          #计算时差的总秒数
+'''883800'''
 
-
-
-
-
+#5-3 与datetime格式相加减
+print(dt)
+'''2019-02-20 23:23:58.112611'''
+newdt = dt+deltax
+print(newdt)
+'''2019-03-03 04:53:58.112611'''
+print(dt+timedelta(hours=-3))
+'''2019-02-20 20:23:58.112611'''
 
 
