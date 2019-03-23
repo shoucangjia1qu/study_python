@@ -7,10 +7,11 @@ Created on Thu Mar 21 10:24:29 2019
 
 from socket import *
 from time import ctime
+import os
 
 HOST = ''
 PORT = 21567
-BUFSIZ = 1024
+BUFSIZ = 10240
 ADDR = (HOST,PORT)
 
 tcpSerSock = socket(AF_INET, SOCK_STREAM)       #创建服务器套接字
@@ -26,10 +27,14 @@ while True:
     #客户端交互
     while True:
        data = tcpCliSock.recv(BUFSIZ)
+       data = data.decode('utf-8')
+       responsedic = {'date':ctime(), 'os':os.name, 'ls':str(os.listdir(os.curdir))}
        if not data:
            break
-       data = data.decode('utf-8')
-       tcpCliSock.send((bytes('[%s] %s'%(ctime(),data),'utf-8')))
+       elif responsedic.get(data):
+           tcpCliSock.send(bytes(responsedic[data],'utf-8'))
+       else:
+           tcpCliSock.send((bytes('[%s] %s'%(ctime(),data),'utf-8')))
     tcpCliSock.close()      #关闭客户端对话
 tcpSerSock.close()      #关闭服务器
 
