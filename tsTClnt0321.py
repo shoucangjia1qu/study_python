@@ -8,9 +8,20 @@ Created on Thu Mar 21 10:24:29 2019
 from socket import *
 from time import ctime
 
-HOST = 'localhost'
-PORT = 21567
+defaultHOST = 'localhost'
+defaultPORT = 21567
 BUFSIZ = 1024
+
+def getAddr():
+    HOST = input('input HOST:')
+    PORT = input('input PORT:')
+    return HOST,PORT
+
+HOST,PORT = getAddr()
+if not HOST or not PORT:
+    HOST = defaultHOST
+    PORT = defaultPORT
+
 ADDR = (HOST,PORT)
 
 tcpCliSock = socket(AF_INET, SOCK_STREAM)       #创建客户端套接字
@@ -26,8 +37,3 @@ while True:
         break
     print(data.decode('utf-8'))
 tcpCliSock.close()
-
-
-
-
-
