@@ -7,7 +7,7 @@ Created on Mon Mar 25 22:59:08 2019
 
 from socket import *
 
-HOST = ""
+HOST = ''
 PORT = 5677
 BUFSIZ = 1024
 ADDR = (HOST, PORT)
@@ -26,14 +26,16 @@ while True:
         data = tcpCliSock.recv(BUFSIZ)
         data = data.decode('utf-8')
         if data == 'quit':
-            tcpCliSock.close()
+            print('即将退出')
+            break
         else:
             print('%s said %s'%(addr,data))
         senddata = ''
         if senddata == '':
             senddata = input('>')
         tcpCliSock.send(bytes(senddata,'utf-8'))
-        data = None
+    tcpCliSock.close()
+#        data = None
 tcpSerSock.close()
 
 
