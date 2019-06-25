@@ -148,12 +148,57 @@ while lastP > -1:
 
 
 ###二、哈希算法
+##两个数求和，算法一
+def twoSum(numList, target):
+    res = []                #储存结果的容器
+    num = numList[:]        #深拷贝
+    num.sort()              #排序
+    #初始化左右指针下标
+    left = 0
+    right = len(num) - 1
+    #开始循环遍历
+    while left < right:
+        if num[left] + num[right] == target:
+            res.append(numList.index(num[left]))        #保存左边数字的下标
+            res.append(numList.index(num[right]))       #保存右边数据的下标
+            break
+        elif (num[left] + num[right]) < target:
+            left += 1
+        elif (num[left] + num[right]) > target:
+            right -= 1
+    return res        
+twoSum(numList, 10)
+
+##用哈希算法两个数求和
+def twoSum2(numList, target):
+    hashi = dict()
+    for Idx, i in enumerate(numList):
+        if (target - i) in hashi:
+            return(Idx, hashi[target-i], hashi)
+        hashi[i] = Idx
+twoSum2(numList,11)
+
+###三、单词模式匹配
+def wordLookup(wordPattern, inputStr):
+    word = inputStr.split(" ")
+    if len(word) != len(wordPattern):
+        return False
+    hashd = {}              #储存模式字符串和目标字符串的映射关系
+    used = {}               #储存目标字符串是否已有映射
+    for Idx, wd in enumerate(wordPattern):
+        if wd in hashd:
+            if hashd[wd] != word[Idx]:
+                return False
+        else:
+            if word[Idx] in used:
+                return False
+        hashd[wd] = word[Idx]
+        used[word[Idx]] = True
+    return True
+wordLookup([1,2,2,1], "apple ban ban apple")    
 
 
-
-
-
-
+###四、
 
 
 
