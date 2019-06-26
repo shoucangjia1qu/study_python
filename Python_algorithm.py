@@ -198,8 +198,51 @@ def wordLookup(wordPattern, inputStr):
 wordLookup([1,2,2,1], "apple ban ban apple")    
 
 
-###四、
+###四、猜词游戏
+def getHint(secret, guess):
+    A = 0           #公牛，猜对的数量
+    B = 0           #奶牛，数字猜对位置错误的数量
+    secretDict = {}
+    guessDict = {}
+    for Idx, subSecret in enumerate(secret):
+        if subSecret == guess[Idx]:
+            A += 1
+        else:
+            if subSecret in secretDict:
+                secretDict[subSecret] += 1
+            else:
+                secretDict[subSecret] = 1
+            if guess[Idx] in guessDict:
+                guessDict[guess[Idx]] += 1
+            else:
+                guessDict[guess[Idx]] = 1
+    for digit in secretDict.keys():
+        if digit in guessDict.keys():
+            B += min(secretDict[digit], guessDict[digit])
+    return (str(A)+'A'+str(B)+'B')
+getHint('1132', '0112')
 
+##五、词根
+def replaceWords(dic, sentence):
+    droot = {}
+    s = {}
+    sentence = sentence.split()
+    #储存词根
+    for iroot in dic:
+        if iroot[0] not in droot:
+            droot[iroot[0]] = set()
+            s[iroot[0]] = 0
+        droot[iroot[0]].add(iroot)
+        s[iroot[0]] = max(s[iroot[0]], len(iroot))
+    #匹配词根
+    for Idx, word in enumerate(sentence):
+        if word[0] in droot:
+            for j in range(s[word[0]]):
+                if word[:j+1] in droot[word[0]]:
+                    sentence[Idx] = word[:j+1]
+                    break
+    return ' '.join(sentence)
+replaceWords(['cat', 'bat', 'rat'], 'the cattle was rattled by the battery')
 
 
 
